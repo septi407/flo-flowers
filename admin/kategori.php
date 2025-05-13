@@ -44,7 +44,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">flo_flowers</span>
       </a>
@@ -53,7 +53,8 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword" value="<?php
+        echo isset($_POST['query']) ? htmlspecialchars($_POST['query']) : ''; ?>">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -159,7 +160,7 @@
       <h1>Kategori Produk</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Beranda</a></li>
+          <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
           <li class="breadcrumb-item active">Kategori Produk</li>
         </ol>
       </nav>
@@ -196,29 +197,28 @@
                   $no = 1;
 
                   //Cek apakah ada pencarian
-                  $squery = isset($_POST['query']) ?
-                  mysqli_real_escape_string(mysql: $koneksi, string: $_POST['query']) : '';
+                  $query = isset($_POST['query']) ? mysqli_real_escape_string($koneksi, $_POST['query']) : '';
                   
                   //query dasar
-                  $sql_query = "SELECT id_kategori, nm_kategori FROM tb_kategori";
+                  $sql_query = "SELECT id_ktg, nm_ktg FROM tb_ktg";
 
                   //jika ada pencarian, tambahkan kondisi WHERE
                   if (!empty($squery)) {
-                    $sql_query = " WHERE nm_kategori LIKE '%$squery%'";
+                    $sql_query = " WHERE nm_ktg LIKE '%$squery%'";
                   }
 
                   $sql = mysqli_query(mysql: $koneksi, query: $sql_query);
 
-                  if (mysql_num_rows(result: $sql) > 0) {
+                  if (mysqli_num_rows(result: $sql) > 0) {
                     while ($hasil = mysqli_fetch_array(result: $sql)) {
                       ?>
                           <tr>
                             <td><?php echo $no++; ?></td>
-                            <td><?php echo $hasil['nm_kategori']; ?></td>
-                            <td><a href="e_kategori.php?id=<?php echo $hasil['id_kategori']; ?>" class="btn btn-warning">
+                            <td><?php echo $hasil['nm_ktg']; ?></td>
+                            <td><a href="e_kategori.php?id=<?php echo $hasil['id_ktg']; ?>" class="btn btn-warning">
                                  class="bi bi-pencil-square"></i>
                               </a>
-                              <a href="h_kategori.php?id=<?php echo $hasil["id_kategori"]; ?>" class="btn btn-danger" onclick="return confirm ('Apakah Anda Yakin ingin Menghapus Data?')">
+                              <a href="h_kategori.php?id=<?php echo $hasil["id_ktg"]; ?>" class="btn btn-danger" onclick="return confirm ('Apakah Anda Yakin ingin Menghapus Data?')">
                                 <i class="bi bi-trash"></i>
                               </a>
                             </td>

@@ -1,16 +1,16 @@
 <?php
 include "koneksi.php";
 if (isset($_POST['simpan'])) {
-  $auto = mysqli_query($koneksi, "select max(id_kategori) as max_code from tb_kategori");
+  $auto = mysqli_query($koneksi, "select max(id_ktg) as max_code from tb_ktg");
   $hasil = mysqli_fetch_array($auto);
   $code = $hasil['max_code'];
   $urutan = (int)substr($code, 1, 3);
   $urutan++;
   $huruf = "K";
-  $id_kategori = $huruf . sprintf("%03s", $urutan);
-  $nm_kategori = $_POST['nm_kategori'];
+  $id_ktg = $huruf . sprintf("%03s", $urutan);
+  $nm_ktg = $_POST['nm_ktg'];
 
-  $query = mysqli_query($koneksi, "INSERT INTO tb_kategori(id_kategori, nm_kategori) VALUES ('$id_kategori', '$nm_kategori')");
+  $query = mysqli_query($koneksi, "INSERT INTO tb_ktg(id_ktg, nm_ktg) VALUES ('$id_ktg', '$nm_ktg')");
   if ($query) {
     echo "<script>alert('Data berhasil ditambahkan!')</script>";
     header("refresh:0, kategori.php");
@@ -190,10 +190,10 @@ if (isset($_POST['simpan'])) {
             <div class="card-body">
               <form class="row g-3 mt-2" method="post">
                 <div class="col-12">
-                  <label for="nm_kategori"
+                  <label for="nm_ktg"
                   class="form-label">Nama Kategori</label>
                   <input type="text" class="form-control"
-                  id="nm_kategori" name="nm_kategori"
+                  id="nm_ktg" name="nm_ktg"
                   placeholder="Masukkan Nama Kategori Produk">
                 </div>
                 <div class="text-center">
